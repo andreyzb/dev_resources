@@ -358,6 +358,7 @@ Full-Width Styles
   background: #f2f2f2;
   border-top: 1px solid #111;
   border-bottom: 1px solid #111;
+  position: relative;
 }
 
 #main_content {
@@ -368,7 +369,38 @@ Full-Width Styles
   background: #212121;
 }
 
+#nav ul{
+  margin: 0;
+  padding: 0;
+}
 
+#nav ul li{
+  display: inline-block;
+  padding: 5px 10px 0;
+  border: 1px solid #808080;
+  border-radius: 5px 5px 0 0;
+  border-bottom: none;
+  transition: background-color 0.5s ease;
+}
+
+#nav ul li:hover,
+#nav ul li.active{
+  background-color: #F9F9F9;
+  transition: background-color 0.5s ease;
+}
+#nav ul li:hover a,
+#nav ul li a:hover{
+  text-decoration: none;
+}
+
+
+#sidebar {
+    float: left;
+    position: absolute;
+    top: 0;
+    width: 25%;
+    z-index: 1;
+}
 
 /*******************************************************************************
 Small Device Styles
@@ -423,3 +455,5 @@ Small Device Styles
   }
 
 }
+
+
