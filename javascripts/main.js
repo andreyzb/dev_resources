@@ -9,13 +9,7 @@
       sidebar.createSidebar();
       sidebar.findLinks();
 
-      $('a', sidebar.sidebar).on('click', function(e){
-        e.preventDefault();
-        var target = $(this).attr('href');
-        $('html, body').animate({
-          scrollTop: $(target).offset().top
-        }, 2000);
-      });
+      sidebar.attachEvents();
     },
 
     findLinks: function(){
@@ -28,15 +22,13 @@
 
         switch (current.prop('tagName')){
           case 'H2':
-            var link = sidebar.createMenuItem(title, anchor);
-            $('ul', sidebar.sidebar).append(link);
+            var link = sidebar.createMenuItem(title, anchor, true);
+            $('>ul', sidebar.sidebar).append(link);
             break;
           case 'H3':
-            var parent = $(current).prevAll('h2').first().find('a').attr('href');
-            if ($('a[href="'+parent+'"]', sidebar.sidebar).siblings('ul').length == 0) {
-              //$('a[href="'+parent+'"]', sidebar.sidebar).after('<ul></ul>');
-            }
-            //console.log(parent);
+            var parent = $(current).prevAll('h2').first().find('a').attr('id');
+            var link = sidebar.createMenuItem(title, anchor, false);
+            $('a[href="#'+parent+'"]', sidebar.sidebar).next('ul').append(link);
             break;
         }
 
@@ -46,8 +38,13 @@
       });
     },
 
-    createMenuItem: function(title, anchor){
-      return $('<li><a href="#'+anchor+'">' + title + '</a></li>');
+    createMenuItem: function(title, anchor, withSub){
+      withSub = withSub || false;
+      if (withSub) {
+        return $('<li class="parent"><a href="#'+anchor+'">' + title + '</a><ul></ul></li>');
+      } else {
+        return $('<li class="child"><a href="#'+anchor+'">' + title + '</a></li>');
+      }
     },
 
     createSidebar: function(){
@@ -61,6 +58,22 @@
 
       sidebar.sidebar = $('#sidebar');
       sidebar.sidebarY = sidebar.sidebar.offset().top;
+    },
+
+    attachEvents: function(){
+      $('.parent > a').on('click', function(e){
+        e.preventDefault();
+        $(this).parent().toggleClass('open');
+      });
+
+
+      /*$('a', sidebar.sidebar).on('click', function(e){
+        e.preventDefault();
+        var target = $(this).attr('href');
+        $('html, body').animate({
+          scrollTop: $(target).offset().top
+        }, 2000);
+      });*/
     },
 
     scroll: function(event){

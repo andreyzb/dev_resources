@@ -401,6 +401,22 @@ Full-Width Styles
     width: 25%;
     z-index: 1;
 }
+#sidebar a{
+  text-decoration: none;
+}
+
+#sidebar ul li.parent ul {
+  position: absolute;
+  visibility: hidden;
+  opacity: 0; 
+  transition: opacity 1s ease-out;
+}
+#sidebar ul li.parent.open ul {
+  position: static;
+  visibility: visible;
+  opacity: 1; 
+  transition: opacity 1s ease;
+}
 
 /*******************************************************************************
 Small Device Styles
